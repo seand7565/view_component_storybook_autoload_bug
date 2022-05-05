@@ -1,24 +1,21 @@
-# README
+# THE BUG
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+When you have view_component_storybooks storybook path set to `app/components`, `app/components` will no longer be eager loaded, causing issues with view_components - including the first render for every rails session breaking.
 
-Things you may want to cover:
+Run `bin/rails zeitwerk:check` with this app and you will see the following message:
 
-* Ruby version
+```
+Hold on, I am eager loading the application.
 
-* System dependencies
+WARNING: The following directories will only be checked if you configure
+them to be eager loaded:
 
-* Configuration
+  /#{app_location}/view_component_storybook_autoload_bug/app/components
 
-* Database creation
+You may verify them manually, or add them to config.eager_load_paths
+in config/application.rb and run zeitwerk:check again.
 
-* Database initialization
+Otherwise, all is good!
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+indicating that no components were eager loaded.
